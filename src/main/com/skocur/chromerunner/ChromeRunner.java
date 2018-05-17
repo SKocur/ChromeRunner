@@ -2,19 +2,11 @@ package com.skocur.chromerunner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Proxy;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -25,55 +17,16 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-class Website implements Runnable {
-
-    String url;
-    String PROXY;
-    String PORT;
-    int id;
-
-    public Website(String proxy, String port) {
-        this.PROXY = proxy;
-        this.PORT = port;
-    }
-
-    public Website(String url, String proxy, String port, int counter) {
-        this.url = url;
-        this.PROXY = proxy;
-        this.PORT = port;
-        this.id = counter;
-    }
-
-    @Override
-    public void run() {
-        String proxyServer = PROXY + ":" + PORT;
-
-        Proxy proxy = new Proxy();
-        proxy.setHttpProxy(proxyServer);
-        proxy.setSslProxy(proxyServer);
-
-        ChromeOptions options = new ChromeOptions();
-        options.setCapability("proxy", proxy);
-        options.setCapability("chrome.switches", Arrays.asList("--proxy-server=" + proxyServer));
-
-        WebDriver driver = new ChromeDriver(options);
-        driver.get(url);
-
-        System.out.println("Successfully opened");
-    }
-}
 
 public class ChromeRunner extends Application {
 
+    final int HEIGHT = 300;
+    final int WIDTH = 100;
+
     public static void main(String[] args) {
-
         launch(args);
-
     }
 
     @Override
@@ -82,17 +35,14 @@ public class ChromeRunner extends Application {
 
         VBox vbox = new VBox();
         Button startButton = new Button("Start!");
-        Label threadNumberLabel = new Label("Liczba przegl¹darek:");
-        Label urlLabel = new Label("PELNY adres URL strony docelowej");
-        Label infoLabel = new Label("Nale¿y pamietac o liœcie dzialaj¹cych serwerów Proxy z pliku proxy_list.txt, "
-                + "których liczba powinna byc wieksza lub równa liczbie uruchamianych przegl¹darek. "
-                + "Sprawne serwery Proxy zawiera strona: https://www.sslproxies.org/");
+        Label threadNumberLabel = new Label("Number of web browsers:");
+        Label urlLabel = new Label("FULL URL address of target website");
+        Label infoLabel = new Label("You ought to remember about list of working proxy servers from proxy_list.txt file, "
+                + "in which total number of proxies shouldn't be smaller than number of running web browsers. "
+                + "You can find working proxy servers here: https://www.sslproxies.org/");
         TextField threadNumberField = new TextField();
         TextField websiteURL = new TextField();
         ObservableList list;
-
-        final int HEIGHT = 300;
-        final int WIDTH = 100;
 
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -167,7 +117,7 @@ public class ChromeRunner extends Application {
             counter++;
         }
 
-        System.out.println(counter);
+        System.out.println("Chrome instances: " + counter);
 
         executor.shutdown();
     }
