@@ -20,11 +20,24 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+/**
+ * <h1>ChromeRunner</h1>
+ * This class is responsible for creating GUI and executing certain
+ * threads based on user input.
+ *
+ * @author Szymon Kocur
+ *
+ */
 public class ChromeRunner extends Application {
 
     final int HEIGHT = 300;
     final int WIDTH = 100;
 
+    /**
+     * This is "starter" method which starts process of creating GUI.
+     *
+     * @param args Arguments passed to Java app
+     */
     public static void main(String[] args) {
         launch(args);
     }
@@ -54,11 +67,11 @@ public class ChromeRunner extends Application {
 
         infoLabel.setWrapText(true);
 
-        threadNumberField.setPromptText("Liczba przegl¹darek");
+        threadNumberField.setPromptText("Number of web browsers");
         threadNumberField.setText("5");
         threadNumberField.setPrefColumnCount(10);
 
-        websiteURL.setPromptText("PELNY adres url strony");
+        websiteURL.setPromptText("FULL URL address of target website");
         websiteURL.setText("http://www.google.pl");
         websiteURL.setPrefColumnCount(30);
 
@@ -83,6 +96,13 @@ public class ChromeRunner extends Application {
         stage.show();
     }
 
+    /**
+     * Given method executes new browsers in separated threads.
+     * Each running web browser has own properties such as IP and PORT.
+     *
+     * @param threadsNumber Number of threads
+     * @param url URL address of target website
+     */
     private void execute(int threadsNumber, String url) {
         File proxiesFile = new File("proxy_list.txt");
         Scanner sc;
@@ -112,7 +132,7 @@ public class ChromeRunner extends Application {
             }
 
             String[] data = proxy.replaceAll("\\s+", "").split(":");
-            executor.execute(new Website(url, data[0], data[1], counter));
+            executor.execute(new Website(url, data[0], data[1]));
 
             counter++;
         }

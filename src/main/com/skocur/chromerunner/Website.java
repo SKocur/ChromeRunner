@@ -7,23 +7,28 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+/**
+ * <h1>Website</h1>
+ * This class is responsible for opening web browser with given IP, PORT and URL.
+ *
+ * @author Szymon Kocur
+ *
+ */
 class Website implements Runnable {
 
     String url;
     String PROXY;
     String PORT;
-    int id;
 
     public Website(String proxy, String port) {
         this.PROXY = proxy;
         this.PORT = port;
     }
 
-    public Website(String url, String proxy, String port, int counter) {
+    public Website(String url, String proxy, String port) {
         this.url = url;
         this.PROXY = proxy;
         this.PORT = port;
-        this.id = counter;
     }
 
     @Override
