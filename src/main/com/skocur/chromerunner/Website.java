@@ -20,10 +20,6 @@ class Website implements Runnable {
     String PROXY;
     String PORT;
 
-    public Website(String proxy, String port) {
-        this.PROXY = proxy;
-        this.PORT = port;
-    }
 
     public Website(String url, String proxy, String port) {
         this.url = url;
