@@ -6,7 +6,9 @@ Software which runs multiple instances of Google Chrome each with different IP a
 
 ### General information:
 * proxy_list.txt file and chromedriver.exe should be in this same directory as ChromeRunner.jar
-* to run this software you have to have installed Java (7 or later) on your computer
+* to run this software you have to have installed:
+    * Java (8 or later) on your computer
+    * Google Chrome
 
 ### Known issues:
 * chromedriver.exe keeps running after closing Chrome tab run by ChromeRunner.jar
