@@ -12,7 +12,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
  * This class is responsible for opening web browser with given IP, PORT and URL.
  *
  * @author Szymon Kocur
- *
  */
 class Website implements Runnable {
 

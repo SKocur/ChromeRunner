@@ -10,8 +10,6 @@ import java.util.concurrent.Executors;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -20,18 +18,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+import javax.swing.*;
+
 /**
  * <h1>ChromeRunner</h1>
  * This class is responsible for creating GUI and executing certain
  * threads based on user input.
  *
  * @author Szymon Kocur
- *
  */
 public class ChromeRunner extends Application {
 
-    final int HEIGHT = 300;
-    final int WIDTH = 100;
+    private final int HEIGHT = 300;
+    private final int WIDTH = 100;
 
     /**
      * This is "starter" method which starts process of creating GUI.
@@ -43,7 +42,7 @@ public class ChromeRunner extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         stage.setTitle("ChromeRunner v.1.0");
 
         VBox vbox = new VBox();
@@ -55,14 +54,10 @@ public class ChromeRunner extends Application {
                 + "You can find working proxy servers here: https://www.sslproxies.org/");
         TextField threadNumberField = new TextField();
         TextField websiteURL = new TextField();
-        ObservableList list;
 
-        startButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
+        startButton.setOnAction((e) -> {
                 int threadNumber = Integer.parseInt(threadNumberField.getText());
                 execute(threadNumber, websiteURL.getText());
-            }
         });
 
         infoLabel.setWrapText(true);
@@ -76,14 +71,14 @@ public class ChromeRunner extends Application {
         websiteURL.setPrefColumnCount(30);
 
         vbox.setSpacing(10);
-        vbox.setMargin(infoLabel, new Insets(20, 20, 5, 20));
-        vbox.setMargin(threadNumberLabel, new Insets(20, 20, 0, 20));
-        vbox.setMargin(threadNumberField, new Insets(0, 20, 20, 20));
-        vbox.setMargin(urlLabel, new Insets(20, 20, 0, 20));
-        vbox.setMargin(websiteURL, new Insets(0, 20, 20, 20));
-        vbox.setMargin(startButton, new Insets(20, 20, 20, 20));
+        VBox.setMargin(infoLabel, new Insets(20, 20, 5, 20));
+        VBox.setMargin(threadNumberLabel, new Insets(20, 20, 0, 20));
+        VBox.setMargin(threadNumberField, new Insets(0, 20, 20, 20));
+        VBox.setMargin(urlLabel, new Insets(20, 20, 0, 20));
+        VBox.setMargin(websiteURL, new Insets(0, 20, 20, 20));
+        VBox.setMargin(startButton, new Insets(20, 20, 20, 20));
 
-        list = vbox.getChildren();
+        ObservableList list = vbox.getChildren();
         list.addAll(infoLabel, threadNumberLabel, threadNumberField, urlLabel, websiteURL, startButton);
 
         Scene myScene = new Scene(vbox, HEIGHT, WIDTH);
@@ -101,7 +96,7 @@ public class ChromeRunner extends Application {
      * Each running web browser has own properties such as IP and PORT.
      *
      * @param threadsNumber Number of threads
-     * @param url URL address of target website
+     * @param url           URL address of target website
      */
     private void execute(int threadsNumber, String url) {
         File proxiesFile = new File("proxy_list.txt");
@@ -117,6 +112,7 @@ public class ChromeRunner extends Application {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "File not found", "Error occured", JOptionPane.ERROR_MESSAGE);
         }
 
         System.setProperty("webdriver.chrome.driver",
