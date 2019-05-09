@@ -100,15 +100,23 @@ public class ChromeRunner extends Application {
      */
     private void execute(int threadsNumber, String url) {
         File proxiesFile = new File("proxy_list.txt");
-        Scanner sc;
 
-        List<String> proxies = new ArrayList<>();
+        ExecutorService executor = Executors.newFixedThreadPool(threadsNumber);
+
+        int counter = 0;
 
         try {
-            sc = new Scanner(proxiesFile);
+            Scanner sc = new Scanner(proxiesFile);
 
             while (sc.hasNext()) {
-                proxies.add(sc.nextLine());
+                if (counter == threadsNumber) {
+                    break;
+                }
+
+                String[] data = sc.nextLine().replaceAll("\\s+", "").split(":");
+                executor.execute(new Website(url, data[0], data[1]));
+
+                counter++;
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -117,21 +125,6 @@ public class ChromeRunner extends Application {
 
         System.setProperty("webdriver.chrome.driver",
                 "chromedriver.exe");
-
-        ExecutorService executor = Executors.newFixedThreadPool(threadsNumber);
-
-        int counter = 0;
-
-        for (String proxy : proxies) {
-            if (counter == threadsNumber) {
-                break;
-            }
-
-            String[] data = proxy.replaceAll("\\s+", "").split(":");
-            executor.execute(new Website(url, data[0], data[1]));
-
-            counter++;
-        }
 
         System.out.println("Chrome instances: " + counter);
 

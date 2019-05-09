@@ -15,9 +15,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
  */
 class Website implements Runnable {
 
-    String url;
-    String PROXY;
-    String PORT;
+    private String url;
+    private String PROXY;
+    private String PORT;
 
 
     public Website(String url, String proxy, String port) {
