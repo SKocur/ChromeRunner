@@ -2,14 +2,14 @@ package com.skocur.chromerunner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.WindowEvent;
 
 import javax.swing.*;
 
@@ -44,6 +45,10 @@ public class ChromeRunner extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("ChromeRunner v.1.0");
+        stage.setOnCloseRequest((e) -> {
+            Platform.exit();
+            System.exit(0);
+        });
 
         VBox vbox = new VBox();
         Button startButton = new Button("Start!");
@@ -128,7 +133,6 @@ public class ChromeRunner extends Application {
         System.setProperty("webdriver.chrome.driver",
                 "chromedriver.exe");
 
-        //System.out.println("Chrome instances: " + counter);
         LogWindow.addLog("Chrome instances: " + counter);
 
         executor.shutdown();

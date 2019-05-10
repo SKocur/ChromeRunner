@@ -1,12 +1,12 @@
 package com.skocur.chromerunner;
 
-import com.sun.javafx.binding.SelectBinding;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class LogWindow {
@@ -24,7 +24,18 @@ public class LogWindow {
     }
 
     private static void setWindow() {
+        int initialWidth = 300;
+        int initialHeight= 800;
+
         Stage stage = new Stage();
+        stage.setTitle("Log Window");
+        stage.setMaxWidth(initialWidth);
+        stage.setMaxHeight(initialHeight);
+
+        Rectangle2D stageBounds = Screen.getPrimary().getVisualBounds();
+
+        stage.setX(stageBounds.getWidth() - initialWidth);
+        stage.setY(0);
 
         VBox box = new VBox();
         box.setSpacing(10);
@@ -32,24 +43,16 @@ public class LogWindow {
         ObservableList list = box.getChildren();
         list.addAll(label);
 
-        Scene scene = new Scene(box, 500, 800);
+        Scene scene = new Scene(box, initialWidth, initialHeight);
         stage.setScene(scene);
-        stage.setMaxWidth(500);
-        stage.setMaxHeight(800);
+
         stage.show();
     }
 
     public static void addLog(String log) {
         stringBuilder.append(log);
         stringBuilder.append("\n");
-        System.out.println(stringBuilder.toString());
 
-
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                label.setText(stringBuilder.toString());
-            }
-        });
+        Platform.runLater(() -> label.setText(stringBuilder.toString()) );
     }
 }

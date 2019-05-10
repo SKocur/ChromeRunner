@@ -18,7 +18,7 @@ class Website implements Runnable {
     private String url;
     private String PROXY;
     private String PORT;
-
+    private WebDriver driver;
 
     public Website(String url, String proxy, String port) {
         this.url = url;
@@ -38,7 +38,7 @@ class Website implements Runnable {
         options.setCapability("proxy", proxy);
         options.setCapability("chrome.switches", Arrays.asList("--proxy-server=" + proxyServer));
 
-        WebDriver driver = new ChromeDriver(options);
+        driver = new ChromeDriver(options);
         driver.get(url);
 
         LogWindow.addLog("Successfully opened: " + proxyServer);
