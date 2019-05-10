@@ -41,6 +41,6 @@ class Website implements Runnable {
         WebDriver driver = new ChromeDriver(options);
         driver.get(url);
 
-        System.out.println("Successfully opened");
+        LogWindow.addLog("Successfully opened: " + proxyServer);
     }
 }

@@ -89,6 +89,8 @@ public class ChromeRunner extends Application {
         stage.setMaxWidth(300);
 
         stage.show();
+
+        LogWindow.run();
     }
 
     /**
@@ -126,7 +128,8 @@ public class ChromeRunner extends Application {
         System.setProperty("webdriver.chrome.driver",
                 "chromedriver.exe");
 
-        System.out.println("Chrome instances: " + counter);
+        //System.out.println("Chrome instances: " + counter);
+        LogWindow.addLog("Chrome instances: " + counter);
 
         executor.shutdown();
     }
