@@ -1,5 +1,5 @@
 # ChromeRunner
-Software which runs multiple instances of Google Chrome each with different IP address. It can be used to test log in system against attacks which use many IP addresses.
+Software which runs multiple instances of Google Chrome each with different IP address. It can be used to test log-in system/website performance, etc. against attacks which use many IP addresses.
 
 ### Screenshot:
 ![Image](images/chromerunner_ss_1.png)
